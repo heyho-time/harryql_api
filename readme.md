@@ -141,7 +141,7 @@ server.js를 저장할 때 마다 nodemon이 서버를 재시작해준다.
 
 ---
 
-### graphQl이 data의 shape을 미리 알고 있어야 하기 때문.
+### graphQl이 data의 shape을 미리 알고 있어야 하기 때문에 나는 에러였다.
 
 ```
 /api/v1/tweets
@@ -160,6 +160,39 @@ graphQl server한테 data의 type을 설명해 줘야한다.<br>
 
 ---
 
+### Type Query
+
+graphQl에게 type을 알려주기위해 Schema Definition Language를 쓴다. = SDL <br>
+
+```
+GET /text
+GET /hello
+```
+
+위처럼 rest API에서 GET request url을 노출시키는 것을 graphQl에서는 아래처럼 type Query를 만들어 준다.
+
+사용자가 뭔가를 요청하게 하려면 type Query안에 있어야 한다.
+
+```jsx
+const typeDefs = gql`
+  type User {
+    id: ID
+    username: String
+  }
+
+  type Tweet {
+    id: ID
+    text: String
+    author: User
+  }
+
+  type Query {
+    allTweets: [Tweet]
+    tweet(id: ID): Tweet
+  }
+`;
+```
+
 ## Scalar and Root Types
 
 apollo는 자체적인 studio를 갖고 있어서 graphQl api를 explore 할 수 있게 해준다. <br>
@@ -177,6 +210,8 @@ graphQl API와 상호작용하는 graphQl과 비슷한 건데<br>
 우선,
 
 ```jsx
+//graphQl에게 type을 알려주기위해 Schema Definition Language를 쓴다. = SDL
+
 const typeDefs = gql`
   type User {
     id: ID
@@ -206,6 +241,39 @@ const typeDefs = gql`
 
 단 하나의 값만을 저장할 수 있는 데이터 타입.
 두 개 이상의 값을 저장할 수 있는 데이터 타입을 컴포지트 타입이라고 한다.
+
+<br>
+
+---
+
+## Mutation Type
+
+GET /api/v1/tweets<br>
+POST /api/v1/tweets
+
+rest의 세계에선 위처럼 작성 한다.
+
+GraphQl에선 이런 것들을 Mutation type에 넣어줄 것이다.
+
+```jsx
+  type Mutation {
+    postTweet(text: String, userId: ID): Tweet
+    deleteTweet(id: ID): Boolean
+  }
+```
+
+user가 backend를 mutate하게 하고 싶거나,<br>
+data를 보내게 해서 그걸 backend에 업로드 하고 싶거나<br>
+DB를 수정하고 cache를 지우고 logout기능을 작동하게 만들고 싶다면<br>
+그게 뭐든 Mutation이라면 Mutation에 넣어줘야 한다.
+
+이딴 식으로 씀.
+<img src="image/3.png" alt="graphQl" width="600">
+
+`POST DELETE PUT` 을 mutation을 사용해 하는 것.
+
+여기까지가 API의 형태를 graphql에 설명하는 부분.<br>
+또한, 데이터에 일어날 수 있는 작업들을 설명하는것도.
 
 <br>
 
