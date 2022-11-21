@@ -133,4 +133,24 @@ server.js를 저장할 때 마다 nodemon이 서버를 재시작해준다.
 
 `Error: Apollo Server requires either an existing schema, modules or typeDefs`
 
+`apollo server는 존재하는 schema, modules or typeDefs를 필요로 합니다.`
+
 이제 시작이다.
+
+<br>
+
+---
+
+### graphQl이 data의 shape을 미리 알고 있어야 하기 때문.
+
+```
+/api/v1/tweets
+/api/v1/users/:id
+```
+
+rest api는 많은 url들의 집합이다.
+
+graphQl api는 많은 `type`들의 집합이다.<br>
+graphQl server한테 data의 type을 설명해 줘야한다.<br>
+
+(무슨 데이터를 return하는지, 어떤 data를 post할지,.)
