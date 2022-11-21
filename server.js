@@ -11,9 +11,20 @@ import { ApolloServer, gql } from "apollo-server";
 // rest API에서 GET request url을 노출시키는 것과 같다.
 // 사용자가 뭔가를 요청하게하려면 type Query안에 있어야 한다.
 const typeDefs = gql`
-  type Query {
+  type User {
+    id: ID
+    username: String
+  }
+
+  type Tweet {
+    id: ID
     text: String
-    hello: String
+    author: User
+  }
+
+  type Query {
+    allTweets: [Tweet]
+    tweet(id: ID): Tweet
   }
 `;
 

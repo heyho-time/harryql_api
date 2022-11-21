@@ -152,5 +152,61 @@ rest api는 많은 url들의 집합이다.
 
 graphQl api는 많은 `type`들의 집합이다.<br>
 graphQl server한테 data의 type을 설명해 줘야한다.<br>
-
 (무슨 데이터를 return하는지, 어떤 data를 post할지,.)
+
+**type Query**를 만들어주면 localhost:4000으로 정상 접근 할 수 있다.
+
+<br>
+
+---
+
+## Scalar and Root Types
+
+apollo는 자체적인 studio를 갖고 있어서 graphQl api를 explore 할 수 있게 해준다. <br>
+graphQl API와 상호작용하는 graphQl과 비슷한 건데<br>
+각종 버튼, 다크모드 등을 지원한다.
+
+`Query your server`를 클릭해 시작해보자.
+
+<img src="image/1.png" alt="graphQl" width="600">
+
+1. 왜 error가 안뜰까?
+
+2. 왜 null일까?
+
+우선,
+
+```jsx
+const typeDefs = gql`
+  type User {
+    id: ID
+    username: String
+  }
+
+  type Tweet {
+    id: ID
+    text: String
+    author: User
+  }
+
+  type Query {
+    allTweets: [Tweet]
+    tweet(id: ID): Tweet
+  }
+`;
+```
+
+타입을 이렇게 지정해주면, argument를 받을 수 있다.
+
+<img src="image/2.png" alt="graphQl" width="600">
+
+<br>
+
+### `그래서 scalar type이 뭔데?? `
+
+단 하나의 값만을 저장할 수 있는 데이터 타입.
+두 개 이상의 값을 저장할 수 있는 데이터 타입을 컴포지트 타입이라고 한다.
+
+<br>
+
+---
