@@ -278,3 +278,58 @@ DB를 수정하고 cache를 지우고 logout기능을 작동하게 만들고 싶
 <br>
 
 ---
+
+## Non Nullable Fields
+
+에러는 나지않고 null로 나온다.
+
+```jsx
+{
+  "data": {
+    "tweet": null
+  }
+}
+```
+
+이유는, Tweet이 Nullable field이기 때문.
+
+```jsx
+
+type Query {
+    allTweets: [Tweet]
+    tweet(id: ID): Tweet
+  }
+
+  type Tweet {
+    id: ID
+    text: String
+    author: User
+  }
+
+```
+
+graphQl에서는 타입을 위처럼 지정해주면 Tweet이 될수도 있고 null도 될 수 있다.<br>
+이것을 nullable field라고 한다.
+
+심지어 tweet의 인자 id도 ID or null 이기 때문에
+
+```jsx
+// 이것또한 에러를 내지는 않는다.
+
+{
+  tweet {
+    text
+  }
+}
+```
+
+그래서 ! 를 붙이면 null은 안되는, required가 된다.
+
+```jsx
+type Query {
+    allTweets: [Tweet!]!  // 무조건 리스트를 반환하고 무조건 Tweet 타입이어야 함.
+    tweet(id: ID!): Tweet  // id가 9071인 유저가 없을 수  있다.
+  }
+
+
+```
