@@ -333,3 +333,29 @@ type Query {
 
 
 ```
+
+여기까지 GraphQl Schema 정의 언어.
+
+<br>
+
+---
+
+## Query Resolvers
+
+누군가 field를 요청했을때 실제로 호출될 함수이다.<br>
+args를 풀어서 {id} 로 sorting.<br>
+인자를 이용해 데이터를 가져올 수 있다.
+
+```jsx
+const resolvers = {
+  Query: {
+    tweet(root, { id }) {
+      return tweets.find((tweet) => tweet.id === id);
+    },
+  },
+};
+```
+
+<br>
+
+---
