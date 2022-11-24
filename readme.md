@@ -268,6 +268,7 @@ DB를 수정하고 cache를 지우고 logout기능을 작동하게 만들고 싶
 그게 뭐든 Mutation이라면 Mutation에 넣어줘야 한다.
 
 이딴 식으로 씀.
+
 <img src="image/3.png" alt="graphQl" width="600">
 
 `POST DELETE PUT` 을 mutation을 사용해 하는 것.
@@ -359,3 +360,5 @@ const resolvers = {
 <br>
 
 ---
+
+## Mutation Resolvers

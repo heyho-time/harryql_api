@@ -61,6 +61,15 @@ const resolvers = {
     //args는 유저가 보낸 argument
     //apollo server가 resolver를 부를때 root 인자를 줌.
   },
+  Mutation: {
+    postTweet(_, { text, userId }) {
+      const newTweet = {
+        id: tweets.length + 1,
+        text,
+      };
+      tweets.push(newTweet);
+    },
+  },
 };
 
 const server = new ApolloServer({ typeDefs, resolvers });
