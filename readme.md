@@ -362,3 +362,5 @@ const resolvers = {
 ---
 
 ## Mutation Resolvers
+
+## Type Resolvers
