@@ -413,3 +413,42 @@ resolver의 첫번째 인자는 fullName을 호출하는 Object의 data를 준�
 <br>
 
 ---
+
+## Documentation
+
+https://studio.apollographql.com/sandbox/schema/reference
+
+스튜디오에서 스키마를 볼 수 있다.
+
+내 API의 docs.
+
+각 field들의 설명을 추가할 수 있다. 협업 시 이용하면 좋겠다.
+
+```js
+
+
+  """
+    트윗 객체를 설명하는 글.
+  """
+
+  type Tweet {
+    id: ID!
+    text: String!
+    author: User
+  }
+
+  type Mutation {
+    postTweet(text: String!, userId: ID!): Tweet!
+      """
+         deleteTweet에 대한 설명. 이런식으로 객체 안에서도 가능.
+      """
+    deleteTweet(id: ID!): Boolean!
+  }
+
+```
+
+#### Star Wars GraphQl API는 사실 Star Wars rest API를 감싸고 있는거다.(;)
+
+<br>
+
+---

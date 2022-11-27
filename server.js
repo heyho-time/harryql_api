@@ -35,6 +35,9 @@ const typeDefs = gql`
     fullName: String!
   }
 
+  """
+  트윗 객체를 설명하는 글.
+  """
   type Tweet {
     id: ID!
     text: String!
