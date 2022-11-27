@@ -426,7 +426,6 @@ https://studio.apollographql.com/sandbox/schema/reference
 
 ```js
 
-
   """
     트윗 객체를 설명하는 글.
   """
@@ -452,3 +451,98 @@ https://studio.apollographql.com/sandbox/schema/reference
 <br>
 
 ---
+
+## Migrating from REST to GraphQL
+
+express server 최상단에 apollo를 두고 REST API를 GraphQl로 바꾸는 작업을 할 수 있다.
+
+우선 field의 schema를 graphQL로 schema로 서술하는 것. (rest에서 return되는걸 아래처럼 type 정리.)
+
+```js
+  type Movie {
+   id: Int!
+    url: String!
+    imdb_code: String!
+    title: String!
+    title_english: String!
+    title_long: String!
+    slug: String!
+    year: Int!
+    rating: Float!
+    runtime: Float!
+    genres: [String]!
+    summary: String
+    description_full: String!
+    synopsis: String
+    yt_trailer_code: String!
+    language: String!
+    background_image: String!
+    background_image_original: String!
+    small_cover_image: String!
+    medium_cover_image: String!
+    large_cover_image: String!
+  }
+```
+
+그리고 resolver를 만든다.
+
+```jsx
+type Query {
+    allMovies: [Movie!]!
+    allUsers: [User!]!
+    allTweets: [Tweet!]!
+    tweet(id: ID!): Tweet
+    ping: String!
+    movie(id: String!): Movie
+  }
+
+const resolvers = {
+  Query: {
+ .
+ .
+ .
+    allMovies() {
+      return fetch("https://yts.mx/api/v2/list_movies.json")
+        .then((res) => res.json())
+        .then((json) => json.data.movies);
+    },
+    movie(_, { id }) {
+      return fetch(`https://yts.mx/api/v2/movie_details.json?movie_id=${id}`)
+        .then((res) => res.json())
+        .then((json) => json.data.movie);
+    },
+  },
+
+```
+
+내 서버가 다른 서버로 request를 보내고 그 server가 답을 하면 내 server가 graphQl Query에 답을 주는 것.
+
+```jsx
+//operation
+query ($movieId: String!) {
+  movie(id:$movieId){
+    title
+    summary
+    small_cover_image
+  }
+}
+
+//variables
+{
+  "movieId":"41438"
+}
+
+//result
+{
+  "data": {
+    "movie": {
+      "title": "The Execution",
+      "summary": null,
+      "small_cover_image": "https://yts.mx/assets/images/movies/the_execution_2021/small-cover.jpg"
+    }
+  }
+}
+
+```
+
+rest API를 쉽게 GraphQL API로 사용할 수 있다.
