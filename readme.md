@@ -361,6 +361,55 @@ const resolvers = {
 
 ---
 
-## Mutation Resolvers
+## Relationships
 
-## Type Resolvers
+```js
+  User: {
+    fullName({ firstName, lastName }) {
+      return `${firstName} ${lastName}`;
+    },
+  },
+
+```
+
+resolver의 첫번째 인자는 fullName을 호출하는 Object의 data를 준다.
+
+이 점을 이용해 tweet과 user들을 연결할 수 있다.
+
+```json
+{
+  allTweets {
+    id
+    text
+    author {
+      fullName
+    }
+  }
+}
+
+결과.
+{
+  "data": {
+    "allTweets": [
+      {
+        "id": "1",
+        "text": "first",
+        "author": {
+          "fullName": "heyho yo"
+        }
+      },
+      {
+        "id": "2",
+        "text": "second",
+        "author": {
+          "fullName": "harry s"
+        }
+      }
+    ]
+  }
+}
+```
+
+<br>
+
+---
